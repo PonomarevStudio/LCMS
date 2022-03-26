@@ -1,7 +1,11 @@
 {
   "rewrites": [
     {
-      "source": "/api/:collection/:method",
+      "source": "/api/db/:collection/:method",
+      "destination": "/api/db.mjs"
+    },
+    {
+      "source": "/page/:page",
       "destination": "/api/index.mjs"
     }
   ],

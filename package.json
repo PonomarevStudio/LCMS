@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "mongodb": "^4.4.1"
+    "mongodb": "^4.4.1",
+    "serialize-error": "^9.1.1"
   },
   "imports": {
-    "#db": "./lib/db.mjs",
-    "#api": "./lib/api.server.mjs",
+    "#db": "./lib/db.server.mjs",
     "#utils": "./lib/utils.mjs"
   }
 }

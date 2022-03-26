@@ -59,20 +59,20 @@
         }
     </style>
     <script type="module">
-        import API from '/lib/api.client.mjs'
+        import DB from '/lib/db.client.mjs'
 
-        const api = new API()
+        const db = window.db = new DB()
         let pendingRequests = 0
         const queue = Promise.resolve()
-        const requestAPI = async () => {
+        const requestDB = async () => {
             pendingRequests++;
             progress.removeAttribute("value")
-            const result = await api.request(Object.fromEntries(new FormData(form).entries())).catch(e => e.result);
+            const result = await db.request(Object.fromEntries(new FormData(form).entries())).catch(e => e.result);
             response.innerHTML = typeof result == 'object' ? JSON.stringify(result, null, 2) : result
             pendingRequests--;
             progress.value = pendingRequests ? progress.removeAttribute("value") : 100
         }
-        window.onload = () => ['change', 'submit'].forEach(event => form.addEventListener(event, () => queue.then(requestAPI)))
+        window.onload = () => ['change', 'submit'].forEach(event => form.addEventListener(event, () => queue.then(requestDB)))
     </script>
 </head>
 <body>

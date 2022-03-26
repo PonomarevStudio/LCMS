@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="dark light" name="color-scheme">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"
+          name="viewport">
+    <title>LCMS DB API Test</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        :root {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: unset;
+            padding: 20px;
+            font-family: -apple-system, Helvetica, sans-serif;
+        }
+
+        form {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+        }
+
+        @supports (padding-top: env(safe-area-inset-top)) {
+            body {
+                padding: max(env(safe-area-inset-top), 20px) max(env(safe-area-inset-right), 20px) max(env(safe-area-inset-bottom), 20px) max(env(safe-area-inset-left), 20px);
+            }
+        }
+    </style>
+    <script>
+        const getFormQuery = () => new URLSearchParams(new FormData(form)).toString()
+        const requestAPI = () => iframe.src = new URL('?' + getFormQuery(), new URL(`/api/${collection.value}/${method.value}`, location))
+        window.onload = () => form.addEventListener('change', requestAPI) || form.addEventListener('submit', requestAPI)
+    </script>
+</head>
+<body>
+<form id="form">
+    <h1>LCMS DB API Test</h1>
+    <iframe frameborder="0" id="iframe" src="/api/"></iframe>
+    <br>
+    <input id="collection" placeholder="collection" type="text">
+    <br>
+    <input id="method" placeholder="method" type="text">
+    <br>
+    <input name="args" placeholder="args" type="text">
+    <br>
+    <input name="chain" placeholder="chain" type="text">
+</form>
+</body>
+</html>

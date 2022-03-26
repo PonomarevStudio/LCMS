@@ -1,4 +1,10 @@
 {
+  "rewrites": [
+    {
+      "source": "/api/:collection/:method",
+      "destination": "/api/index.mjs"
+    }
+  ],
   "github": {
     "silent": true
   }

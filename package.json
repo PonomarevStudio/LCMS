@@ -1,0 +1,13 @@
+{
+  "name": "lcms",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "mongodb": "^4.4.1"
+  },
+  "imports": {
+    "#db": "./lib/db.mjs",
+    "#api": "./lib/api.mjs",
+    "#utils": "./lib/utils.mjs"
+  }
+}

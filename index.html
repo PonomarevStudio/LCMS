@@ -23,6 +23,10 @@
             font-family: -apple-system, Helvetica, sans-serif;
         }
 
+        h1 {
+            margin-top: unset;
+        }
+
         form {
             height: 100%;
             display: flex;
@@ -30,9 +34,22 @@
             justify-content: center;
         }
 
-        iframe {
+        pre, output {
             width: 100%;
             height: 100%;
+        }
+
+        output {
+            margin: unset;
+            white-space: pre-wrap;
+        }
+
+        progress {
+            width: 100%;
+        }
+
+        form input {
+            margin: .5rem 0;
         }
 
         @supports (padding-top: env(safe-area-inset-top)) {
@@ -41,23 +58,31 @@
             }
         }
     </style>
-    <script>
-        const getFormQuery = () => new URLSearchParams(new FormData(form)).toString()
-        const requestAPI = () => iframe.src = new URL('?' + getFormQuery(), new URL(`/api/${collection.value}/${method.value}`, location))
-        window.onload = () => form.addEventListener('change', requestAPI) || form.addEventListener('submit', requestAPI)
+    <script type="module">
+        import API from '/lib/api.client.mjs'
+
+        const api = new API()
+        let pendingRequests = 0
+        const queue = Promise.resolve()
+        const requestAPI = async () => {
+            pendingRequests++;
+            progress.removeAttribute("value")
+            const result = await api.request(Object.fromEntries(new FormData(form).entries())).catch(e => e.result);
+            response.innerHTML = typeof result == 'object' ? JSON.stringify(result, null, 2) : result
+            pendingRequests--;
+            progress.value = pendingRequests ? progress.removeAttribute("value") : 100
+        }
+        window.onload = () => ['change', 'submit'].forEach(event => form.addEventListener(event, () => queue.then(requestAPI)))
     </script>
 </head>
 <body>
 <form id="form">
     <h1>LCMS DB API Test</h1>
-    <iframe frameborder="0" id="iframe" src="/api/"></iframe>
-    <br>
-    <input id="collection" placeholder="collection" type="text">
-    <br>
-    <input id="method" placeholder="method" type="text">
-    <br>
+    <pre><output id="response"></output></pre>
+    <progress id="progress" value="0"></progress>
+    <input name="collection" placeholder="collection" type="text">
+    <input name="method" placeholder="method" type="text">
     <input name="args" placeholder="args" type="text">
-    <br>
     <input name="chain" placeholder="chain" type="text">
 </form>
 </body>

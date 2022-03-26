@@ -7,7 +7,7 @@
   },
   "imports": {
     "#db": "./lib/db.mjs",
-    "#api": "./lib/api.mjs",
+    "#api": "./lib/api.server.mjs",
     "#utils": "./lib/utils.mjs"
   }
 }

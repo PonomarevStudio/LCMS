@@ -1,3 +1,3 @@
-import API from '#api';
+import API from "#api";
 
-export default new API().handler
+export default async ({query}, {json}) => json(await new API().request(query))

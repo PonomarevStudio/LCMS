@@ -1,8 +1,8 @@
 {
   "rewrites": [
     {
-      "source": "/api/:collection/:method",
-      "destination": "/api/index.mjs"
+      "source": "/api/db/(.*)",
+      "destination": "/api/db.mjs"
     }
   ],
   "github": {

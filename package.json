@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "mongodb": "^4.4.1"
+    "express": "^4.17.3",
+    "mongodb": "^4.4.1",
+    "rest-on-mongo": "^2.4.0"
   },
   "imports": {
     "#db": "./lib/db.mjs",

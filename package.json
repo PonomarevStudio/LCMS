@@ -7,7 +7,7 @@
     "serialize-error": "^9.1.1"
   },
   "imports": {
-    "#db": "./lib/db.server.mjs",
+    "#db": "./lib/db/server.mjs",
     "#utils": "./lib/utils.mjs"
   }
 }

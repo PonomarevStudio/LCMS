@@ -1,4 +1,5 @@
-import DB from "#db";
+import {serializeError} from "serialize-error";
+import {db} from "#db";
 
 export default async ({query}, {json}) =>
-    json(await new DB().collection('pages').findOne({path: query.page}).catch(e => ({error: e})))
+    json(await db.collection('pages').findOne({path: query.page}).catch(e => ({error: serializeError(e)})))

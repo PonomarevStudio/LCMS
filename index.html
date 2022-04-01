@@ -25,6 +25,14 @@
 
         h1 {
             margin-top: unset;
+            margin-bottom: unset;
+        }
+
+        hr {
+            width: 100%;
+            /*height: 1px;*/
+            border: none;
+            border-bottom: 1px solid;
         }
 
         form {
@@ -37,6 +45,11 @@
         pre, output {
             width: 100%;
             height: 100%;
+            margin: unset;
+        }
+
+        pre {
+            overflow-y: scroll;
         }
 
         output {
@@ -59,18 +72,19 @@
         }
     </style>
     <script type="module">
-        import DB from '/lib/db.client.mjs'
+        import {db} from '/lib/db/client.mjs'
 
-        const db = window.db = new DB()
+        window.db = db
         let pendingRequests = 0
         const queue = Promise.resolve()
         const requestDB = async () => {
             pendingRequests++;
             progress.removeAttribute("value")
-            const result = await db.request(Object.fromEntries(new FormData(form).entries())).catch(e => e.result);
+            const query = Object.fromEntries(new FormData(form).entries())
+            const result = await db.request(method.value, query, collection.value).catch(e => e.result);
             response.innerHTML = typeof result == 'object' ? JSON.stringify(result, null, 2) : result
             pendingRequests--;
-            progress.value = pendingRequests ? progress.removeAttribute("value") : 100
+            if (pendingRequests) progress.removeAttribute("value"); else progress.value = 100
         }
         window.onload = () => ['change', 'submit'].forEach(event => form.addEventListener(event, () => queue.then(requestDB)))
     </script>
@@ -78,10 +92,11 @@
 <body>
 <form id="form">
     <h1>LCMS DB API Test</h1>
+    <hr>
     <pre><output id="response"></output></pre>
     <progress id="progress" value="0"></progress>
-    <input name="collection" placeholder="collection" type="text">
-    <input name="method" placeholder="method" type="text">
+    <input id="collection" placeholder="collection" type="text">
+    <input id="method" placeholder="method" type="text">
     <input name="args" placeholder="args" type="text">
     <input name="chain" placeholder="chain" type="text">
 </form>

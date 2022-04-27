@@ -5,10 +5,15 @@
       "destination": "/api/db.mjs"
     },
     {
-      "source": "/page/:page",
+      "source": "/api/page/:page",
+      "destination": "/api/page.mjs"
+    },
+    {
+      "source": "(.*)",
       "destination": "/api/index.mjs"
     }
   ],
+  "trailingSlash": false,
   "github": {
     "silent": true
   }

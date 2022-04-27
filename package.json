@@ -1,10 +1,13 @@
 {
   "name": "lcms",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "mongodb": "^4.4.1",
-    "serialize-error": "^9.1.1"
+    "mongodb": "latest",
+    "serialize-error": "latest",
+    "lit": "npm:@svalit/lit@latest",
+    "@lit-labs/ssr": "npm:@svalit/ssr@latest",
+    "@lit-labs/ssr-client": "npm:@svalit/ssr-client@latest"
   },
   "imports": {
     "#db": "./lib/db/server.mjs",

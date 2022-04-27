@@ -1,14 +1,48 @@
+import {render} from "@lit-labs/ssr/lib/render-with-global-dom-shim.js";
+import {readableFrom} from '@lit-labs/ssr/lib/readable.js';
 import {serializeError} from "serialize-error";
+import EventEmitter from "events";
+import {html} from "lit";
 import {db} from "#db";
-
-// TODO: LCMS server-side loader wrapper for Vercel
 
 export default async (req, res) => {
     try {
-        // TODO: Loading root components via SVALit
-        return res.json(await db.collection('pages').findOne({path: 'index'}))
+        await createRenderThread(req, res)
     } catch (e) {
         return errorHandler(e, res)
+    }
+}
+
+async function createRenderThread(req, res) {
+    const chunks = [];
+    const myEmitter = new EventEmitter();
+
+    myEmitter.once('meta', meta => {
+        res.setHeader('Content-Type', 'text/html; charset=utf-8');
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Content-Disposition', 'inline');
+        res.write(`<!DOCTYPE html><html lang="ru"><head><title>LCMS</title>
+            <meta content="dark light" name="color-scheme">
+            <meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport">
+            <script src="https://polyfill.io/v3/polyfill.min.js?features=globalThis" async noshim></script>
+            <script src="https://unpkg.com/es-module-shims/dist/es-module-shims.js" async noshim></script>
+            </head><body>`);
+        res.write(Buffer.concat(chunks));
+        stream.pipe(res, {end: false});
+    })
+
+    const page = await db.collection('pages').findOne({path: 'index'})
+
+    const stream = await readableFrom(render(html`<h1>${page.title}</h1><p>${page.content}</p>`,
+        {customElementHostStack: []}), true);
+
+    stream.on('end', () => {
+        myEmitter.emit('meta', {})
+        res.end(`</body></html>`)
+    });
+
+    for await (let chunk of stream) {
+        chunks.push(Buffer.from(chunk))
     }
 }
 

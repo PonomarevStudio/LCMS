@@ -8,6 +8,12 @@ import './app-field.mjs'
 import {db} from "#db";
 
 class AppPage extends LitElement {
+    static get properties() {
+        return {
+            url: {type: String}
+        }
+    }
+
     setMeta({title = 'LCMS'} = {}) {
         if (typeof process === 'object') return;
         history.replaceState(history.state, title)
@@ -15,7 +21,9 @@ class AppPage extends LitElement {
     }
 
     fetchPageData() {
-        return db.collection('pages').findOne({path: 'index'})
+        const location = new URL(this.url)
+        const path = location.pathname.split('/').filter(Boolean).shift() || 'index'
+        return db.collection('pages').findOne({path})
     }
 
     render() {

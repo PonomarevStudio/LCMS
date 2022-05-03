@@ -5,6 +5,7 @@ import {chain} from "#utils";
 import './context-node.js'
 import './app-context.mjs'
 import './app-field.mjs'
+import {db} from "#db";
 
 class AppPage extends LitElement {
     setMeta({title = 'LCMS'} = {}) {
@@ -14,21 +15,16 @@ class AppPage extends LitElement {
     }
 
     fetchPageData() {
-        const data = {
-            title: 'LCMS Page',
-            description: 'Demo project that uses SvaLit and custom Context API 🔥',
-            content: '<h1><app-field key="title"></app-field></h1><p><app-field key="description"></app-field></p>'
-        }
-        this.setMeta(data)
-        return this.page = data
+        return db.collection('pages').findOne({path: 'index'})
     }
 
     render() {
-        this.fetchPageData()
+        const page = this.fetchPageData()
+        chain(page, this.setMeta)
         return html`
-            <context-node .data="${this.page}">
+            <context-node .data="${page}">
                 <app-context>
-                    ${syncUntil(chain(this.page, ({content}) => unsafeHTML(content)))}
+                    ${syncUntil(chain(page, ({content}) => unsafeHTML(content)))}
                 </app-context>
             </context-node>`
     }

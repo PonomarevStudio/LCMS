@@ -11,7 +11,9 @@ class AppContext extends LitElement {
     }
 
     render() {
-        this.page = {title: 'Page title from Context ✨'}
+        this.page = {...this.context.fetchContext('page')}
+        this.page.title = 'Page title from Context ✨'
+        // if (!this.page.content) this.page.content = '<h1><app-field key="title"></app-field></h1>'
         return html`
             <slot></slot>`
     }

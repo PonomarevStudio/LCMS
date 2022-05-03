@@ -16,7 +16,8 @@ class AppPage extends LitElement {
     fetchPageData() {
         const data = {
             title: 'LCMS Page',
-            content: '<h1><app-field key="title"></app-field></h1>'
+            description: 'Demo project that uses SvaLit and custom Context API 🔥',
+            content: '<h1><app-field key="title"></app-field></h1><p><app-field key="description"></app-field></p>'
         }
         this.setMeta(data)
         return this.page = data
@@ -25,7 +26,7 @@ class AppPage extends LitElement {
     render() {
         this.fetchPageData()
         return html`
-            <context-node .data="${{page: this.page}}">
+            <context-node .data="${this.page}">
                 <app-context>
                     ${syncUntil(chain(this.page, ({content}) => unsafeHTML(content)))}
                 </app-context>

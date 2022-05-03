@@ -9,8 +9,7 @@ class AppField extends LitElement {
     }
 
     render() {
-        const context = this.context.fetchContext('page') || {}
-        return context[this.key] || ''
+        return this.context.fetchContext(this.key) || ''
     }
 }
 

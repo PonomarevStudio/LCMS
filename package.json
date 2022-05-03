@@ -4,6 +4,7 @@
   "type": "module",
   "dependencies": {
     "mongodb": "latest",
+    "bson-objectid": "latest",
     "serialize-error": "latest",
     "lit": "npm:@svalit/lit@latest",
     "@lit-labs/ssr": "npm:@svalit/ssr@latest",

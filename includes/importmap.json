@@ -1,0 +1,15 @@
+{
+  "imports": {
+    "#utils": "/lib/utils.mjs",
+    "lit": "https://cdn.jsdelivr.net/npm/@svalit/lit",
+    "lit/": "https://cdn.jsdelivr.net/npm/@svalit/lit/",
+    "lit-html": "https://cdn.jsdelivr.net/npm/@svalit/lit-html",
+    "lit-html/": "https://cdn.jsdelivr.net/npm/@svalit/lit-html/",
+    "lit-element/": "https://cdn.jsdelivr.net/npm/@svalit/lit-element/",
+    "@lit-labs/ssr-client/": "https://cdn.jsdelivr.net/npm/@svalit/ssr-client/",
+    "@lit/reactive-element/": "https://cdn.jsdelivr.net/npm/@svalit/reactive-element/",
+    "@lit/reactive-element": "https://cdn.jsdelivr.net/npm/@svalit/reactive-element/reactive-element.js",
+    "@webcomponents/template-shadowroot/": "https://cdn.skypack.dev/@webcomponents/template-shadowroot/",
+    "bson-objectid": "https://cdn.skypack.dev/bson-objectid"
+  }
+}

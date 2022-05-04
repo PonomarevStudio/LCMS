@@ -29,15 +29,22 @@ class AppContext extends LitElement {
 
     static get properties() {
         return {
-            title: {context: true}, links: {context: true}, template: {context: true}
+            title: {context: true, proxy: true},
+            links: {context: true, proxy: true},
+            template: {context: true, proxy: true}
         }
     }
 
+    firstUpdated() {
+        requestAnimationFrame(() => this.title = this.context.fetchContext('title') + ' 💧')
+    }
+
     render() {
-        this.links = [{href: '/', title: 'Index page'}, {href: '/test', title: 'Test page'}, {
-            href: '/error',
-            title: 'Error page'
-        }]
+        this.links = [
+            {href: '/', title: 'Index page'},
+            {href: '/test', title: 'Test page'},
+            {href: '/error', title: 'Error page'}
+        ]
         this.template = '<app-link></app-link>'
         return html`
             <slot></slot>

@@ -11,6 +11,7 @@
     "@lit-labs/ssr-client": "npm:@svalit/ssr-client@latest"
   },
   "imports": {
+    "#lib/": "./lib/",
     "#db": "./lib/db/server.mjs",
     "#utils": "./lib/utils.mjs"
   }

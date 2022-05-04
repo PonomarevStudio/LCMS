@@ -1,10 +1,11 @@
 import {css, html, LitElement} from "lit"
 import {syncUntil} from "../lib/directives.mjs";
 import {ContextController} from "../lib/context.mjs";
-import {chain} from "#utils";
+import {all, chain} from "#utils";
 import {db} from "#db";
 import './app-iterator.mjs'
 import './app-link.mjs'
+import {fetchTemplate} from "../lib/template.mjs";
 
 class AppContext extends LitElement {
     context = new ContextController(this);
@@ -39,7 +40,8 @@ class AppContext extends LitElement {
     }
 
     fetchLinks() {
-        return chain(db.collection('pages').find(), pages => pages.map(({path: href, ...page}) => ({...page, href})))
+        return chain(db.collection('pages').find(),
+            pages => pages.map(({path: href, ...page}) => ({title: 'Link', ...page, href})))
     }
 
     firstUpdated() {
@@ -47,9 +49,9 @@ class AppContext extends LitElement {
     }
 
     render() {
-        this.template = '<app-link></app-link>'
+        const templateLoader = chain(fetchTemplate('../includes/link.html', 'link', import.meta.url), template => this.template = template)
         const linksLoader = chain(this.fetchLinks(), links => this.links = links)
-        return syncUntil(chain(linksLoader, () => html`
+        return syncUntil(chain(all([templateLoader, linksLoader]), () => html`
             <slot></slot><h2>Pages</h2>
             <nav>
                 <app-iterator key="links"></app-iterator>

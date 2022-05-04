@@ -1,5 +1,6 @@
 {
   "imports": {
+    "#lib/": "/lib/",
     "#utils": "/lib/utils.mjs",
     "#db": "/lib/db/client.mjs",
     "lit": "https://cdn.jsdelivr.net/npm/@svalit/lit",

@@ -17,8 +17,8 @@ class AppLink extends LitElement {
     }
 
     render() {
-        const href = this.href || this.context.fetchContext('href')
-        const title = this.title || this.context.fetchContext('title')
+        const href = this.href || this.context.fetchContext('href') || '/'
+        const title = this.title || this.context.fetchContext('title') || 'Link'
         return html`<a href="${href}">${title}</a>`
     }
 }

@@ -1,7 +1,7 @@
 import {LitElement} from "lit"
 import {ContextController} from "../lib/context.mjs";
 
-class AppField extends LitElement {
+export class AppField extends LitElement {
     context = new ContextController(this);
 
     static get properties() {
@@ -13,7 +13,7 @@ class AppField extends LitElement {
     }
 
     render() {
-        return this.fetchValue()
+        return this.fetchValue() || ''
     }
 }
 

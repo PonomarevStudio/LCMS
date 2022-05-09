@@ -1,10 +1,11 @@
 import {chain} from "#utils";
 import {html, LitElement} from "lit"
-import {syncUntil} from "../lib/directives.mjs";
+import {SafeUntil} from "../lib/directives.mjs";
 import {ContextController} from "../lib/context.mjs";
 
 class ContextNode extends LitElement {
-    context = new ContextController(this, {anyProperty: true});
+    context = new ContextController(this, {anyProperty: true})
+    safeUntil = new SafeUntil(this)
 
     fetchJSONData() {
         if (!this.renderRoot || !this.renderRoot.querySelector) return;
@@ -28,7 +29,7 @@ class ContextNode extends LitElement {
     render() {
         const json = this.fetchJSONData()
         const data = chain(this.data, this.assignPropertyData.bind(this))
-        return syncUntil(chain(data, data => html([`${this.renderJSON(json, data)}<slot></slot>`])))
+        return this.safeUntil(chain(data, data => html([`${this.renderJSON(json, data)}<slot></slot>`])))
     }
 }
 

@@ -1,5 +1,5 @@
 import {css, html, LitElement} from "lit"
-import {syncUntil} from "../lib/directives.mjs";
+import {SafeUntil} from "../lib/directives.mjs";
 import {ContextController} from "../lib/context.mjs";
 import {all, chain} from "#utils";
 import {db} from "#db";
@@ -8,7 +8,8 @@ import './app-link.mjs'
 import {fetchTemplate} from "../lib/template.mjs";
 
 class AppContext extends LitElement {
-    context = new ContextController(this);
+    context = new ContextController(this)
+    safeUntil = new SafeUntil(this)
 
     static get styles() {
         return css`
@@ -45,13 +46,13 @@ class AppContext extends LitElement {
     }
 
     firstUpdated() {
-        requestAnimationFrame(() => this.title = this.context.fetchContext('title') + ' 💧')
+        requestAnimationFrame(() => this.title = this.context.fetchContext('title', {fallback: ''}) + ' 💧')
     }
 
     render() {
         const templateLoader = chain(fetchTemplate('../includes/link.html', 'link', import.meta.url), template => this.template = template)
         const linksLoader = chain(this.fetchLinks(), links => this.links = links)
-        return syncUntil(chain(all([templateLoader, linksLoader]), () => html`
+        return this.safeUntil(chain(all([templateLoader, linksLoader]), () => html`
             <slot></slot><h2>Pages</h2>
             <nav>
                 <app-iterator key="links"></app-iterator>

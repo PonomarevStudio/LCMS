@@ -9,6 +9,12 @@ import './app-html.mjs'
 import {db} from "#db";
 import {fetchTemplate} from "../lib/template.mjs";
 
+const page404 = {
+    status: 404,
+    title: '404 — Страница не найдена',
+    content: fetchTemplate('../includes/404.html', '404', import.meta.url)
+}
+
 class AppPage extends LitElement {
     safeUntil = new SafeUntil(this)
 
@@ -18,7 +24,7 @@ class AppPage extends LitElement {
         }
     }
 
-    setMeta({title = 'LCMS', status} = {}) {
+    setMeta({title = 'LCMS', status = 200} = {}) {
         if (typeof process === 'object') return;
         history.replaceState(history.state, title)
         document.title = title
@@ -27,17 +33,17 @@ class AppPage extends LitElement {
     fetchPageData() {
         const location = new URL(this.url)
         const path = location.pathname.split('/').filter(Boolean).shift() || 'index'
+        return db.collection('pages').findOne({path})
+    }
+
+    fetchRouteData() {
         if (window.page && window.page.url === this.url) return window.page
-        return chain(db.collection('pages').findOne({path}), data => data || {
-            title: '404 — Страница не найдена',
-            description: `Вы можете вернуться на <a href="/">главную</a>`,
-            status: 404
-        })
+        return {}
     }
 
     render() {
-        const page = this.fetchPageData()
-        const content = fetchTemplate('../includes/templates/base.html', 'base', import.meta.url)
+        const page = this.fetchRouteData().status === 404 ? page404 : chain(this.fetchPageData(), data => data || page404)
+        const content = chain(page, ({content}) => content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url))
         chain(page, data => this.setMeta(data || {}))
         return html`
             <context-node .data="${page}">

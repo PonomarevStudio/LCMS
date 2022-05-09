@@ -3,7 +3,7 @@ import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 
 class AppHTML extends AppField {
     render() {
-        return unsafeHTML(this.fetchValue() || '')
+        return unsafeHTML(this.fetchValue() || `<slot></slot>`)
     }
 }
 

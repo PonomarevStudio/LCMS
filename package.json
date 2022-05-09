@@ -3,12 +3,14 @@
   "version": "0.0.1",
   "type": "module",
   "dependencies": {
-    "mongodb": "latest",
-    "bson-objectid": "latest",
-    "serialize-error": "latest",
-    "lit": "npm:@svalit/lit@latest",
     "@lit-labs/ssr": "npm:@svalit/ssr@latest",
-    "@lit-labs/ssr-client": "npm:@svalit/ssr-client@latest"
+    "@lit-labs/ssr-client": "npm:@svalit/ssr-client@latest",
+    "bson-objectid": "latest",
+    "clean-stack": "latest",
+    "lit": "npm:@svalit/lit@latest",
+    "mongodb": "latest",
+    "serialize-error": "latest",
+    "string.prototype.replaceall": "latest"
   },
   "imports": {
     "#lib/": "./lib/",

@@ -7,6 +7,13 @@ class ContextNode extends LitElement {
     context = new ContextController(this, {anyProperty: true})
     safeUntil = new SafeUntil(this)
 
+    static get properties() {
+        return {
+            data: {type: Object},
+            _hydrated: {state: true}
+        }
+    }
+
     fetchJSONData() {
         if (!this.renderRoot || !this.renderRoot.querySelector) return;
         const jsonNode = this.renderRoot.querySelector('script[type="application/json"]')
@@ -23,7 +30,12 @@ class ContextNode extends LitElement {
     }
 
     renderJSON(json, data) {
+        if (this._hydrated) return ''
         return `<script type="application/json">${json || JSON.stringify(data, null, 4)}</script>`
+    }
+
+    firstUpdated() {
+        requestAnimationFrame(() => this._hydrated = true)
     }
 
     render() {

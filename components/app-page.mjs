@@ -20,7 +20,7 @@ class AppPage extends LitElement {
 
     static get properties() {
         return {
-            url: {type: String}
+            url: {type: String, reflect: true}
         }
     }
 
@@ -47,10 +47,25 @@ class AppPage extends LitElement {
         chain(page, data => this.setMeta(data || {}))
         return html`
             <context-node .data="${page}">
-                <app-context>
-                    ${this.safeUntil(chain(all([page, content]), ([, content]) => unsafeHTML(content)))}
-                </app-context>
+                ${this.safeUntil(chain(all([page, content]), ([, content]) =>
+                        unsafeHTML(`<app-context>${content}</app-context>`)))}
             </context-node>`
+    }
+
+    navigate(url, skipHistory) {
+        if (!skipHistory) {
+            if (location.href === url) return;
+            history.pushState({referrer: location.href}, 'LCMS', url);
+        }
+        this.url = url
+        document.title = 'LCMS'
+        window.scrollTo(0, 0)
+    }
+
+    connectedCallback() {
+        super.connectedCallback();
+        this.addEventListener('navigate', e => e.detail.href ? this.navigate(e.detail.href) : null);
+        window.addEventListener('popstate', e => this.navigate(e.target.location.href, true));
     }
 }
 

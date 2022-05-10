@@ -45,8 +45,8 @@ class AppContext extends LitElement {
             pages => pages.map(({path: href, ...page}) => ({title: 'Link', ...page, href})))
     }
 
-    firstUpdated() {
-        requestAnimationFrame(() => this.title = this.context.fetchContext('title', {fallback: ''}) + ' 💧')
+    updated() {
+        requestAnimationFrame(() => this.title = this.context.fetchContext('title', {listen: true}) + ' 💧')
     }
 
     render() {

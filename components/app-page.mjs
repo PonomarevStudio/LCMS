@@ -8,6 +8,7 @@ import './app-field.mjs'
 import './app-html.mjs'
 import {db} from "#db";
 import {fetchTemplate} from "../lib/template.mjs";
+import {attachStateProxy} from "../lib/router.mjs";
 
 const page404 = {
     status: 404,
@@ -20,7 +21,8 @@ class AppPage extends LitElement {
 
     static get properties() {
         return {
-            url: {type: String, reflect: true}
+            url: {type: String, reflect: true},
+            state: {context: true}
         }
     }
 
@@ -41,10 +43,23 @@ class AppPage extends LitElement {
         return {}
     }
 
+    fetchPageImports({imports = {}} = {}) {
+        if (!imports) return;
+        return all(Object.entries(imports).filter(([element]) => !customElements.get(element)).map(([, url]) =>
+            import(new URL(url, new URL('../', import.meta.url)).href)))
+    }
+
+    firstUpdated() {
+        attachStateProxy()
+    }
+
     render() {
         const page = this.fetchRouteData().status === 404 ? page404 : chain(this.fetchPageData(), data => data || page404)
         const content = chain(page, ({content}) => content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url))
-        chain(page, data => this.setMeta(data || {}))
+        chain(page, data => {
+            this.setMeta(data || {})
+            this.fetchPageImports(data || {})
+        })
         return html`
             <context-node .data="${page}">
                 ${this.safeUntil(chain(all([page, content]), ([, content]) =>
@@ -57,6 +72,7 @@ class AppPage extends LitElement {
             if (location.href === url) return;
             history.pushState({referrer: location.href}, 'LCMS', url);
         }
+        attachStateProxy()
         this.url = url
         document.title = 'LCMS'
         window.scrollTo(0, 0)

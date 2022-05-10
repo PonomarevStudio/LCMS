@@ -1,7 +1,7 @@
 {
   "functions": {
     "api/*": {
-      "includeFiles": "includes/**"
+      "includeFiles": "+(components|includes|lib)/**"
     }
   },
   "rewrites": [

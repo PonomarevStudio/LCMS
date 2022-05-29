@@ -9,7 +9,8 @@ class SimpleCounter extends LitElement {
     static get styles() {
         return css`
           button {
-            font-size: inherit
+            font-size: inherit;
+            touch-action: manipulation;
           }`
     }
 

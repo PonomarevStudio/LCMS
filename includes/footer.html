@@ -6,5 +6,7 @@
         hydrateShadowRoots(document.body)
     }
 
-    import('/components/app-page.mjs') // TODO: Not importable when shim
+    import('/lib/loader.mjs').then(({syncImport}) => Promise.all(window.imports.map((url) => syncImport(url)))).then(() => {
+        import('/components/app-page.mjs') // TODO: Not importable when shim
+    })
 </script>

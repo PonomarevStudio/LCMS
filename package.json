@@ -13,7 +13,7 @@
     "string.prototype.replaceall": "latest"
   },
   "imports": {
-    "#lib/": "./lib/",
+    "#lib/*": "./lib/*",
     "#db": "./lib/db/server.mjs",
     "#utils": "./lib/utils.mjs"
   }

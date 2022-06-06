@@ -1,6 +1,7 @@
 import {html, LitElement} from "lit"
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 import {SafeUntil} from "../lib/directives.mjs";
+import {syncImport, imports} from '../lib/loader.mjs';
 import {all, chain} from "#utils";
 import './context-node.js'
 import './app-context.mjs'
@@ -56,14 +57,18 @@ class AppPage extends LitElement {
     render() {
         const page = this.fetchRouteData().status === 404 ? page404 : chain(this.fetchPageData(), data => data || page404)
         const content = chain(page, ({content}) => content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url))
+        const imports = all([syncImport('./import-test.mjs', import.meta.url)])
         chain(page, data => {
             this.setMeta(data || {})
             this.fetchPageImports(data || {})
         })
         return html`
             <context-node .data="${page}">
-                ${this.safeUntil(chain(all([page, content]), ([, content]) =>
-                        unsafeHTML(`<app-context>${content}</app-context>`)))}
+                ${this.safeUntil(chain(all([page, content, imports]), ([, content]) =>
+                        html`
+                            <main>${unsafeHTML(`<app-context>${content}</app-context>`)}</main>
+                            <import-test
+                                    .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`))}
             </context-node>`
     }
 

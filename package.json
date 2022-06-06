@@ -5,6 +5,7 @@
   "dependencies": {
     "@lit-labs/ssr": "npm:@svalit/ssr@latest",
     "@lit-labs/ssr-client": "npm:@svalit/ssr-client@latest",
+    "@svalit/ssr-client": "latest",
     "bson-objectid": "latest",
     "clean-stack": "latest",
     "lit": "npm:@svalit/lit@latest",

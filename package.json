@@ -2,6 +2,7 @@
   "name": "lcms",
   "version": "0.0.1",
   "type": "module",
+  "main": "src/index.mjs",
   "dependencies": {
     "@jspm/generator": "^1.0.0-beta.31",
     "@lit-labs/ssr": "^2.2.0",

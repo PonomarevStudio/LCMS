@@ -1,0 +1,6 @@
+/api
+/includes
+/components
+vercel.json
+.github
+*.html

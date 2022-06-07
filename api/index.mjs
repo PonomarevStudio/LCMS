@@ -1,10 +1,13 @@
-import {createRenderThread} from "../lib/page.mjs"
-import {errorHandler} from "../lib/errorHandler.mjs"
+import RenderThread from "#root/src/index.mjs"
+import {html} from "lit"
 
-export default async (req, res) => {
-    try {
-        await createRenderThread(req, res)
-    } catch (e) {
-        return errorHandler(e, res)
-    }
-}
+import '../components/app-page.mjs'
+
+export default (req, res) => new RenderThread(req, res, {
+    page: {
+        title: 'LCMS',
+        template: ({page: {url, setMeta}}) => html`
+            <app-page url="${url}" .setMeta="${setMeta}"></app-page>`
+    },
+    root: new URL('../', import.meta.url).href
+}).renderTemplate()

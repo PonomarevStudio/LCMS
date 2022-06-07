@@ -1,7 +1,6 @@
 import {html, css, LitElement} from "lit"
-import {state} from '#lib/router.mjs'
 
-class SimpleCounter extends LitElement {
+export class SimpleCounter extends LitElement {
     static get properties() {
         return {count: {state: true}}
     }
@@ -15,11 +14,12 @@ class SimpleCounter extends LitElement {
     }
 
     setCount(value) {
-        state.count = this.count = value
+        this.count = value
+        if (window.state) window.state.count = this.count
     }
 
     firstUpdated() {
-        this.count = state.count || 0
+        this.count = (window.state ? parseInt(state.count) : 0) || 0
     }
 
     render() {

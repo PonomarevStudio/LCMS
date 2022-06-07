@@ -44,12 +44,6 @@ class AppPage extends LitElement {
         return {}
     }
 
-    fetchPageImports({imports = {}} = {}) {
-        if (!imports) return;
-        return all(Object.entries(imports).filter(([element]) => !customElements.get(element)).map(([, url]) =>
-            import(new URL(url, new URL('../', import.meta.url)).href)))
-    }
-
     firstUpdated() {
         attachStateProxy()
     }
@@ -57,11 +51,12 @@ class AppPage extends LitElement {
     render() {
         const page = this.fetchRouteData().status === 404 ? page404 : chain(this.fetchPageData(), data => data || page404)
         const content = chain(page, ({content}) => content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url))
-        const imports = all([syncImport('./import-test.mjs', import.meta.url)])
-        chain(page, data => {
-            this.setMeta(data || {})
-            this.fetchPageImports(data || {})
+        const imports = chain(page, ({imports}) => {
+            const importList = ['./import-test.mjs']
+            if (imports) new Set(Object.values(imports)).forEach(url => importList.push(url))
+            return all(importList.map(url => syncImport(url, import.meta.url)))
         })
+        chain(page, data => this.setMeta(data || {}))
         return html`
             <context-node .data="${page}">
                 ${this.safeUntil(chain(all([page, content, imports]), ([, content]) =>

@@ -12,6 +12,7 @@
     "@svalit/ssr-client": "^1.0.0-rc.2",
     "bson-objectid": "^2.0.3",
     "clean-stack": "^4.2.0",
+    "fetched-list": "^0.0.5",
     "lit": "^2.2.5",
     "lit-element": "npm:@svalit/lit-element@^3.0.0-rc.3",
     "mongodb": "^4.7.0",

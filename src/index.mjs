@@ -8,26 +8,27 @@ import {readableFrom} from "@svalit/ssr/lib/readable.js";
 import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
 
 const readFile = path => readFileSync(new URL(path, import.meta.url))
-const scriptTemplate = source => `<script>${source}</script>`
+const scriptTemplate = (source, attributes = {}) =>
+    `<script ${Object.entries(attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${source}</script>`
 
 export default class RenderThread {
     chunks = []
+    isDev = process.env.VERCEL_ENV === 'development'
 
     constructor(req, res, {
         renderEvents = new EventEmitter(),
         root = new URL('../', import.meta.url).href,
-        env = [this.environment, 'browser', 'module'],
         headContent = readFile('../includes/head.html'),
         importMap = readFile('../includes/importmap.json'),
         footerContent = readFile('../includes/footer.html'),
-        page = {title: 'LCMS', template: () => `Hello !`},
-        environment = process.env.VERCEL_ENV === 'development' ? 'development' : 'production'
+        env = [this.isDev ? 'development' : 'production', 'browser', 'module'],
+        page = {title: 'LCMS', template: () => `Hello !`}
     } = {}) {
-        Object.assign(this, {req, res, root, page, importMap, headContent, footerContent, environment, renderEvents})
-        this.renderEvents.once('meta', this.metaHandler.bind(this))
+        Object.assign(this, {req, res, root, page, importMap, headContent, footerContent, renderEvents})
         this.page.url = `${req.headers['x-forwarded-proto'].split(',').shift()}://${req.headers['x-forwarded-host']}${req.url}`
+        this.importMapGenerator = new Generator({env, rootUrl: this.root, cache: this.isDev});
         globalThis.renderInfo = {customElementHostStack: [], customElementInstanceStack: []}
-        this.importMapGenerator = new Generator({env, rootUrl: this.root, cache: false});
+        this.renderEvents.once('meta', this.metaHandler.bind(this))
     }
 
     async renderTemplate(template = this.page.template) {
@@ -70,6 +71,10 @@ export default class RenderThread {
             scriptTemplate(`window.cache=${db.exportCache()}`),
             scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`),
             this.footerContent,
+            Object.keys(imports).map(url => scriptTemplate(`import '${url.startsWith('/') ? ('#root' + url) : url}';`, {
+                type: "module",
+                defer: "defer"
+            })).join('\n'),
             `</body></html>`
         ].join('')
     }

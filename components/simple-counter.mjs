@@ -1,5 +1,5 @@
 import {html, css, LitElement} from "lit"
-import {state} from '../lib/router.mjs'
+import {state} from '#lib/router.mjs'
 
 class SimpleCounter extends LitElement {
     static get properties() {

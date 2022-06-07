@@ -1,15 +1,15 @@
 import {html, LitElement} from "lit"
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
-import {SafeUntil} from "../lib/directives.mjs";
-import {syncImport, imports} from '../lib/loader.mjs';
+import {SafeUntil} from "#lib/directives.mjs";
+import {syncImport} from '#lib/loader.mjs';
 import {all, chain} from "#utils";
 import './context-node.js'
 import './app-context.mjs'
 import './app-field.mjs'
 import './app-html.mjs'
 import {db} from "#db";
-import {fetchTemplate} from "../lib/template.mjs";
-import {attachStateProxy} from "../lib/router.mjs";
+import {fetchTemplate} from "#lib/template.mjs";
+import {attachStateProxy} from "#lib/router.mjs";
 
 const page404 = {
     status: 404,

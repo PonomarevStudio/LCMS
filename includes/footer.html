@@ -1,12 +1,12 @@
 <script defer type="module">
     import 'lit/experimental-hydrate-support.js'
-    import {hydrateShadowRoots} from '@webcomponents/template-shadowroot/template-shadowroot.js'
+    import {hydrateShadowRoots} from '@webcomponents/template-shadowroot'
 
     if (!HTMLTemplateElement.prototype.hasOwnProperty('shadowRoot')) {
         hydrateShadowRoots(document.body)
     }
 
-    import('/lib/loader.mjs').then(({syncImport}) => Promise.all(window.imports.map((url) => syncImport(url)))).then(() => {
-        import('/components/app-page.mjs') // TODO: Not importable when shim
+    import('#lib/loader.mjs').then(({syncImport}) => Promise.all(window.imports.map((url) => syncImport(url)))).then(() => {
+        import('#root/components/app-page.mjs') // TODO: Not importable when shim
     })
 </script>

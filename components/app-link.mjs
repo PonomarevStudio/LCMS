@@ -1,6 +1,6 @@
 import {css, html, LitElement} from "lit"
-import {navigate} from "../lib/router.mjs";
-import {ContextController} from "../lib/context.mjs";
+import {navigate} from "#lib/router.mjs";
+import {ContextController} from "#lib/context.mjs";
 
 class AppLink extends LitElement {
     context = new ContextController(this);

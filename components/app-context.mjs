@@ -1,11 +1,11 @@
 import {css, html, LitElement} from "lit"
-import {SafeUntil} from "../lib/directives.mjs";
-import {ContextController} from "../lib/context.mjs";
+import {SafeUntil} from "#lib/directives.mjs";
+import {ContextController} from "#lib/context.mjs";
 import {all, chain} from "#utils";
 import {db} from "#db";
 import './app-iterator.mjs'
 import './app-link.mjs'
-import {fetchTemplate} from "../lib/template.mjs";
+import {fetchTemplate} from "#lib/template.mjs";
 
 class AppContext extends LitElement {
     context = new ContextController(this)
@@ -42,7 +42,7 @@ class AppContext extends LitElement {
 
     fetchLinks() {
         return chain(db.collection('pages').find(),
-            pages => pages.map(({path: href, ...page}) => ({title: 'Link', ...page, href})))
+            pages => pages.map(({path, ...page}) => ({title: 'Link', ...page, href: '/' + path})))
     }
 
     updated() {

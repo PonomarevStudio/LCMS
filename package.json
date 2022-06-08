@@ -8,6 +8,7 @@
     "@lit-labs/ssr": "^2.2.0",
     "@lit-labs/ssr-client": "npm:@svalit/ssr-client@^1.0.0-rc.2",
     "@svalit/lit-element": "^3.0.0-rc.3",
+    "@svalit/simple-counter": "^0.0.1",
     "@svalit/ssr": "^1.0.0-rc.2",
     "@svalit/ssr-client": "^1.0.0-rc.2",
     "bson-objectid": "^2.0.3",
@@ -16,6 +17,7 @@
     "lit": "^2.2.5",
     "lit-element": "npm:@svalit/lit-element@^3.0.0-rc.3",
     "mongodb": "^4.7.0",
+    "node-fetch": "^3.2.5",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6"
   },

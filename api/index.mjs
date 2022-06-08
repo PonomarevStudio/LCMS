@@ -9,5 +9,6 @@ export default (req, res) => new RenderThread(req, res, {
         template: ({page: {url, setMeta}}) => html`
             <app-page url="${url}" .setMeta="${setMeta}"></app-page>`
     },
+    isDev: process.env.VERCEL_ENV === 'development',
     root: new URL('../', import.meta.url).href
 }).renderTemplate()

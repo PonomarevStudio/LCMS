@@ -9,25 +9,26 @@ import {render} from "@svalit/ssr/lib/render-with-global-dom-shim.js";
 
 const readFile = path => readFileSync(new URL(path, import.meta.url))
 const scriptTemplate = (source, attributes = {}) =>
-    `<script ${Object.entries(attributes).map(([k, v]) => `${k}="${v}"`).join(' ')}>${source}</script>`
+    `<script ${Object.entries(attributes).map(([k, v]) => k + (v ? `="${v}"` : '')).join(' ')}>${source}</script>`
 
 export default class RenderThread {
     chunks = []
-    isDev = process.env.VERCEL_ENV === 'development'
 
     constructor(req, res, {
+        env = false,
+        isDev = false,
         renderEvents = new EventEmitter(),
         root = new URL('../', import.meta.url).href,
         headContent = readFile('../includes/head.html'),
         importMap = readFile('../includes/importmap.json'),
         footerContent = readFile('../includes/footer.html'),
-        env = [this.isDev ? 'development' : 'production', 'browser', 'module'],
         page = {title: 'LCMS', template: () => `Hello !`}
     } = {}) {
-        Object.assign(this, {req, res, root, page, importMap, headContent, footerContent, renderEvents})
-        this.page.url = `${req.headers['x-forwarded-proto'].split(',').shift()}://${req.headers['x-forwarded-host']}${req.url}`
-        this.importMapGenerator = new Generator({env, rootUrl: this.root, cache: this.isDev});
         globalThis.renderInfo = {customElementHostStack: [], customElementInstanceStack: []}
+        globalThis.env = this.env = env || [isDev ? 'development' : 'production', 'browser', 'module']
+        Object.assign(this, {req, res, root, page, isDev, importMap, headContent, footerContent, renderEvents})
+        this.page.url = `${req.headers['x-forwarded-proto'].split(',').shift()}://${req.headers['x-forwarded-host']}${req.url}`
+        this.importMapGenerator = new Generator({rootUrl: root, cache: isDev, env: this.env})
         this.renderEvents.once('meta', this.metaHandler.bind(this))
     }
 
@@ -45,7 +46,8 @@ export default class RenderThread {
         this.res.setHeader('Content-Type', 'text/html; charset=utf-8');
         this.renderEvents.emit('meta', {})
         const output = Buffer.concat(this.chunks) + this.footerTemplate()
-        return this.res.end(await this.importMapGenerator.htmlGenerate(output, {esModuleShims: true}))
+        const result = await this.importMapGenerator.htmlGenerate(output, {esModuleShims: true})
+        return this.res.end(result.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"'))
     }
 
     metaHandler({title = this.page.title, status = 200} = {}) {
@@ -61,21 +63,21 @@ export default class RenderThread {
             `<script type="importmap">${this.importMap}</script>`,
             `<title>${title}</title>`,
             `</head><body>`
-        ].join('')
+        ].join('\n')
     }
 
     footerTemplate(page = this.page) {
+        const importScriptAttributes = {type: "module", defer: null}
+        const importTemplate = (url) => `import '${url.startsWith('/') ? ('#root' + url) : url}';`
         return [
             dumpTemplates(),
+            scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`),
+            scriptTemplate(`window.env=${JSON.stringify(globalThis.env)}`),
             scriptTemplate(`window.page=${JSON.stringify(page)}`),
             scriptTemplate(`window.cache=${db.exportCache()}`),
-            scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`),
             this.footerContent,
-            Object.keys(imports).map(url => scriptTemplate(`import '${url.startsWith('/') ? ('#root' + url) : url}';`, {
-                type: "module",
-                defer: "defer"
-            })).join('\n'),
+            Object.keys(imports).map(url => scriptTemplate(importTemplate(url), importScriptAttributes)).join('\n'),
             `</body></html>`
-        ].join('')
+        ].join('\n')
     }
 }

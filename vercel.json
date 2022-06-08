@@ -1,7 +1,7 @@
 {
   "functions": {
-    "api/*": {
-      "includeFiles": "+(components|includes|lib)/**"
+    "api/index.mjs": {
+      "includeFiles": "**/**"
     }
   },
   "rewrites": [

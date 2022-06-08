@@ -63,7 +63,9 @@ class AppPage extends LitElement {
                         html`
                             <main>${unsafeHTML(`<app-context>${content}</app-context>`)}</main>
                             <import-test
-                                    .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`))}
+                                    .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`), html`
+                    <p>Loading page <span>${this.url}</span> ...</p>
+                    <import-test .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`)}
             </context-node>`
     }
 

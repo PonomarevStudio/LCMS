@@ -72,10 +72,11 @@ export default class RenderThread {
         const importTemplate = (url) => `import '${url.startsWith('/') ? ('#root' + url) : url}';`
         return [
             dumpTemplates(),
+            this.isDev ? `<script src="/src/livereload.mjs"></script>` : '',
             scriptTemplate(`window.imports=${JSON.stringify(Object.keys(imports))}`),
             scriptTemplate(`window.env=${JSON.stringify(globalThis.env)}`),
             scriptTemplate(`window.page=${JSON.stringify(page)}`),
-            scriptTemplate(`window.cache=${db.exportCache()}`),
+            db?.exportCache ? scriptTemplate(`window.cache=${db.exportCache()}`) : '',
             this.footerContent,
             Object.keys(imports).map(url => scriptTemplate(importTemplate(url), importScriptAttributes)).join('\n'),
             `</body></html>`

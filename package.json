@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "type": "module",
   "main": "src/index.mjs",
+  "scripts": {
+    "dev": "vc dev --listen 80",
+    "dev-watch": "servor --reload & vc dev --listen 80"
+  },
   "dependencies": {
     "@jspm/generator": "^1.0.0-beta.31",
     "@lit-labs/ssr": "^2.2.0",
@@ -20,6 +24,9 @@
     "node-fetch": "^3.2.5",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6"
+  },
+  "devDependencies": {
+    "servor": "^4.0.2"
   },
   "imports": {
     "#root/*": "./*",

@@ -1,3 +1,4 @@
+import {errorHandler} from "#lib/errorHandler.mjs"
 import RenderThread from "#root/src/index.mjs"
 import {html} from "lit"
 
@@ -11,4 +12,4 @@ export default (req, res) => new RenderThread(req, res, {
     },
     isDev: process.env.VERCEL_ENV === 'development',
     root: new URL('../', import.meta.url).href
-}).renderTemplate()
+}).renderTemplate().catch(e => errorHandler(e, res))

@@ -1,7 +1,7 @@
 import {db} from "#db";
 import {readFileSync} from "fs";
 import EventEmitter from "events";
-import {imports} from "#lib/loader.mjs";
+import {imports, resetImports} from "#lib/loader.mjs";
 import {Generator} from "@jspm/generator";
 import {dumpTemplates} from "#lib/template.mjs";
 import {readableFrom} from "@svalit/ssr/lib/readable.js";
@@ -46,6 +46,7 @@ export default class RenderThread {
         this.res.setHeader('Content-Type', 'text/html; charset=utf-8');
         this.renderEvents.emit('meta', {})
         const output = Buffer.concat(this.chunks) + this.footerTemplate()
+        resetImports()
         const result = await this.importMapGenerator.htmlGenerate(output, {esModuleShims: true})
         return this.res.end(result.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"'))
     }

@@ -21,7 +21,7 @@
     "lit": "^2.2.5",
     "lit-element": "npm:@svalit/lit-element@^3.0.0-rc.3",
     "mongodb": "^4.7.0",
-    "node-fetch": "^3.2.5",
+    "node-fetch": "^3.2.6",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6"
   },

@@ -1,8 +1,8 @@
 import {html, LitElement} from "lit"
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
-import {SafeUntil} from "#lib/directives.mjs";
-import {syncImport} from '#lib/loader.mjs';
-import {all, chain, catcher} from "#utils";
+import {SafeUntil} from "svalit/directives.mjs";
+import {syncImport} from 'svalit/loader.mjs';
+import {all, chain, catcher} from "svalit/utils.mjs";
 import './context-node.js'
 import './app-context.mjs'
 import './app-field.mjs'

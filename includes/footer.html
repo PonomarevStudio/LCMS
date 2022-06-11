@@ -7,7 +7,7 @@
         hydrateShadowRoots(document.body)
     }
 
-    import('#lib/loader.mjs').then(({syncImport}) => Promise.all(window.imports.map((url) => syncImport(url)))).then(() => {
+    import('svalit/loader.mjs').then(({syncImport}) => Promise.all(window.imports.map((url) => syncImport(url)))).then(() => {
         import('#root/components/app-page.mjs') // TODO: Not importable when shim
     })
 </script>

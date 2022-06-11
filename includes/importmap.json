@@ -3,6 +3,36 @@
     "#root/": "/",
     "#lib/": "/lib/",
     "#utils": "/lib/utils.mjs",
-    "#db": "/lib/db/client.mjs"
+    "#db": "/lib/db/client.mjs",
+    "#root/components/import-test.mjs": "./components/import-test.mjs",
+    "@webcomponents/template-shadowroot": "https://ga.jspm.io/npm:@webcomponents/template-shadowroot@0.1.0/template-shadowroot.js",
+    "fetched-list": "https://ga.jspm.io/npm:fetched-list@0.0.5/index.mjs",
+    "lit/experimental-hydrate-support.js": "https://ga.jspm.io/npm:lit@2.2.5/experimental-hydrate-support.js",
+    "svalit/loader.mjs": "https://ga.jspm.io/npm:svalit@0.1.0-alpha.5/loader.mjs"
+  },
+  "scopes": {
+    "./": {
+      "@svalit/ssr-client/directives/server-until.js": "https://ga.jspm.io/npm:@svalit/ssr-client@1.0.0-rc.2/development/directives/server-until.js",
+      "lit": "https://ga.jspm.io/npm:lit@2.2.5/index.js",
+      "lit/directives/until.js": "https://ga.jspm.io/npm:lit@2.2.5/directives/until.js",
+      "svalit/directives.mjs": "https://ga.jspm.io/npm:svalit@0.1.0-alpha.5/directives.mjs",
+      "svalit/utils.mjs": "https://ga.jspm.io/npm:svalit@0.1.0-alpha.5/utils.mjs"
+    },
+    "https://ga.jspm.io/": {
+      "@lit/reactive-element": "https://ga.jspm.io/npm:@lit/reactive-element@1.3.2/development/reactive-element.js",
+      "lit-element/experimental-hydrate-support.js": "https://ga.jspm.io/npm:lit-element@3.2.0/development/experimental-hydrate-support.js",
+      "lit-element/lit-element.js": "https://ga.jspm.io/npm:lit-element@3.2.0/development/lit-element.js",
+      "lit-html": "https://ga.jspm.io/npm:lit-html@2.2.5/development/lit-html.js",
+      "lit-html/directive-helpers.js": "https://ga.jspm.io/npm:@svalit/lit-html@2.0.0-rc.4/development/directive-helpers.js",
+      "lit-html/directive.js": "https://ga.jspm.io/npm:@svalit/lit-html@2.0.0-rc.4/development/directive.js",
+      "lit-html/directives/until.js": "https://ga.jspm.io/npm:@svalit/lit-html@2.0.0-rc.4/development/directives/until.js",
+      "lit-html/experimental-hydrate.js": "https://ga.jspm.io/npm:lit-html@2.2.5/development/experimental-hydrate.js",
+      "lit/directive-helpers.js": "https://ga.jspm.io/npm:@svalit/lit@2.0.0-rc.3/directive-helpers.js",
+      "lit/directive.js": "https://ga.jspm.io/npm:@svalit/lit@2.0.0-rc.3/directive.js",
+      "lit/directives/until.js": "https://ga.jspm.io/npm:@svalit/lit@2.0.0-rc.3/directives/until.js"
+    },
+    "https://ga.jspm.io/npm:lit@2.2.5/": {
+      "lit-html/directives/until.js": "https://ga.jspm.io/npm:lit-html@2.2.5/development/directives/until.js"
+    }
   }
 }

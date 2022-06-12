@@ -1,0 +1,6 @@
+[submodule "packages/svalit"]
+	path = packages/svalit
+	url = https://github.com/SvaLit/Svalit
+[submodule "packages/vercel"]
+	path = packages/vercel
+	url = https://github.com/SvaLit/Vercel

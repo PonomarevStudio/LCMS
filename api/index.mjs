@@ -1,15 +1,16 @@
+import RenderPage from "../src/index.mjs"
+import RenderStream from "@svalit/vercel"
 import {errorHandler} from "#lib/errorHandler.mjs"
-import RenderThread from "#root/src/index.mjs"
-import {html} from "lit"
+import {template, options} from "../src/template.mjs"
 
-import '../components/app-page.mjs'
+const RenderPageStream = RenderPage(RenderStream)
 
-export default (req, res) => new RenderThread(req, res, {
-    page: {
-        title: 'LCMS',
-        template: ({page: {url, setMeta}}) => html`
-            <app-page url="${url}" .setMeta="${setMeta}"></app-page>`
-    },
-    isDev: process.env.VERCEL_ENV === 'development',
-    root: new URL('../', import.meta.url).href
-}).renderTemplate().catch(e => errorHandler(e, res))
+export default (req, res) => {
+    try {
+        const url = `${req.headers['x-forwarded-proto'].split(',').shift()}://${req.headers['x-forwarded-host']}${req.url}`
+        const page = new RenderPageStream({...options, req, res, meta: {title: 'LCMS', url}})
+        return page.renderTemplate(template)
+    } catch (e) {
+        return errorHandler(e, res)
+    }
+}

@@ -1,7 +1,7 @@
 import {html, LitElement} from "lit"
-import {chain} from "#lib/utils.mjs";
-import {syncImport} from "#lib/loader.mjs";
-import {SafeUntil} from "#lib/directives.mjs";
+import {chain} from "svalit/utils.mjs";
+import {syncImport} from "svalit/loader.mjs";
+import {SafeUntil} from "svalit/directives.mjs";
 
 const FetchedList = await import("fetched-list")
 
@@ -17,7 +17,7 @@ class ImportTest extends LitElement {
     }
 
     render() {
-        return this.safeUntil(chain(syncImport("fetched-list"), () => html`
+        return this.safeUntil(chain(syncImport("fetched-list", import.meta.url), () => html`
             <p>
                 <marquee direction="left" width="300px">${this.text || 'Property not set 🥲'}</marquee>
             </p>`), html`<p>Loading...</p>`)

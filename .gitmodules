@@ -4,3 +4,6 @@
 [submodule "packages/vercel"]
 	path = packages/vercel
 	url = https://github.com/SvaLit/Vercel
+[submodule "packages/components"]
+	path = packages/components
+	url = https://github.com/SvaLit/Components

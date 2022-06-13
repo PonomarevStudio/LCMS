@@ -42,7 +42,10 @@ class AppContext extends LitElement {
 
     fetchLinks() {
         return chain(db.collection('pages').find(),
-            pages => pages.map(({path, ...page}) => ({title: 'Link', ...page, href: '/' + path})))
+            pages => pages.map(({path, ...page}) => ({
+                title: 'Link', ...page,
+                href: '/' + (path === 'index' ? '' : path)
+            })))
     }
 
     updated() {

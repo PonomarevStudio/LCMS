@@ -82,7 +82,7 @@ class AppPage extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
-        this.addEventListener('navigate', e => e.detail.href ? this.navigate(e.detail.href) : null);
+        window.addEventListener('navigate', e => e.detail.href ? this.navigate(e.detail.href) : null);
         window.addEventListener('popstate', e => this.navigate(e.target.location.href, true));
     }
 }

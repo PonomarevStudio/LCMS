@@ -19,7 +19,7 @@
     "mongodb": "^4.7.0",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
-    "svalit": "^0.1.0-alpha.8"
+    "svalit": "^0.1.0-alpha.11"
   },
   "devDependencies": {
     "servor": "^4.0.2"

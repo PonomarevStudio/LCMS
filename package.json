@@ -5,8 +5,7 @@
   "main": "src/index.mjs",
   "scripts": {
     "dev": "vc dev --listen 80",
-    "dev-watch": "servor --reload & vc dev --listen 80",
-    "vercel-build": "node ./src/build.mjs"
+    "dev-watch": "servor --reload & vc dev --listen 80"
   },
   "dependencies": {
     "@lit-labs/router": "^0.1.0",

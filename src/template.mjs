@@ -7,7 +7,6 @@ const dev = process.env.VERCEL_ENV === 'development'
 
 export const options = {
     dev,
-    shim: true,
     importMapOptions: {
         cache: dev,
         ignore: ['mongodb'],
@@ -20,6 +19,7 @@ export const options = {
             }
         }
     },
+    shim: {shimMode: true, mapOverrides: true},
     imports: ['/components/app-page.mjs', '/components/app-router.mjs'],
     content: {head: readFileSync(new URL('../includes/head.html', import.meta.url))}
 }

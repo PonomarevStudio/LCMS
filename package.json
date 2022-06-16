@@ -9,6 +9,7 @@
     "vercel-build": "node ./src/build.mjs"
   },
   "dependencies": {
+    "@lit-labs/router": "^0.1.0",
     "@svalit/simple-counter": "^0.0.1",
     "@svalit/vercel": "^0.1.0-alpha.1",
     "bson-objectid": "^2.0.3",
@@ -19,7 +20,8 @@
     "mongodb": "^4.7.0",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
-    "svalit": "^0.1.0-alpha.11"
+    "svalit": "^0.1.0-alpha.11",
+    "urlpattern-polyfill": "^5.0.3"
   },
   "devDependencies": {
     "servor": "^4.0.2"

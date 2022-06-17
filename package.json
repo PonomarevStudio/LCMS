@@ -8,7 +8,7 @@
     "dev-watch": "servor --reload & vc dev --listen 80"
   },
   "dependencies": {
-    "@lit-labs/router": "^0.1.0",
+    "@svalit/router": "^0.1.0-alpha.2",
     "@svalit/simple-counter": "^0.0.1",
     "@svalit/vercel": "^0.1.0-alpha.1",
     "bson-objectid": "^2.0.3",

@@ -1,7 +1,6 @@
 import "urlpattern-polyfill"
 import {html, LitElement} from "lit"
-import {chain} from "svalit/utils.mjs"
-import {Router} from '@lit-labs/router'
+import {Router} from '@svalit/router'
 import {SafeUntil} from "svalit/directives.mjs"
 
 class LitRouter extends LitElement {
@@ -13,17 +12,13 @@ class LitRouter extends LitElement {
     ], {fallback: {render: () => html`<h1>404</h1>`}})
 
     static get properties() {
-        return {url: {type: String}}
+        return {url: {type: String, reflect: true}}
     }
 
     render() {
-        let init = true
-        if (typeof process === 'object') {
-            if (this.router._childRoutes) this.router._childRoutes = []; else this.router.t = []
-            init = this.router.goto(new URL(this.url).pathname)
-        }
+        if (typeof process === 'object') this.router.serverPath = new URL(this.url).pathname
         return html`
-            <main>${this.safeUntil(chain(init, () => this.router.outlet()))}</main>
+            <main>${this.safeUntil(this.router.outlet())}</main>
             <nav><a href="/">/</a><br><a href="/test">/test</a></nav>`
     }
 }

@@ -7,3 +7,6 @@
 [submodule "packages/components"]
 	path = packages/components
 	url = https://github.com/SvaLit/Components
+[submodule "packages/router"]
+	path = packages/router
+	url = https://github.com/SvaLit/Router

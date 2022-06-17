@@ -17,7 +17,11 @@ class LitRouter extends LitElement {
     }
 
     render() {
-        const init = typeof process === 'object' ? this.router.goto(new URL(this.url).pathname) : true
+        let init = true
+        if (typeof process === 'object') {
+            if (this.router._childRoutes) this.router._childRoutes = []; else this.router.t = []
+            init = this.router.goto(new URL(this.url).pathname)
+        }
         return html`
             <main>${this.safeUntil(chain(init, () => this.router.outlet()))}</main>
             <nav><a href="/">/</a><br><a href="/test">/test</a></nav>`

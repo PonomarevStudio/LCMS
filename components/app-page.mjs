@@ -1,15 +1,15 @@
 import {html, LitElement} from "lit"
-import {unsafeHTML} from 'lit/directives/unsafe-html.js';
-import {SafeUntil} from "svalit/directives.mjs";
-import {syncImport} from 'svalit/loader.mjs';
-import {all, chain, catcher} from "svalit/utils.mjs";
+import {syncImport} from 'svalit/loader.mjs'
+import {SafeUntil} from "svalit/directives.mjs"
+import {fetchTemplate} from "#lib/template.mjs"
+import {attachStateProxy} from "#lib/router.mjs"
+import {unsafeHTML} from 'lit/directives/unsafe-html.js'
+import {all, chain, catcher, syncTemplate} from "svalit/utils.mjs"
 import './context-node.js'
 import './app-context.mjs'
 import './app-field.mjs'
 import './app-html.mjs'
-import {db} from "#db";
-import {fetchTemplate} from "#lib/template.mjs";
-import {attachStateProxy} from "#lib/router.mjs";
+import {db} from "#db"
 
 const page404 = {
     status: 404,
@@ -69,10 +69,6 @@ class AppPage extends LitElement {
             <import-test .text="${importTest}"></import-test>`
     }
 
-    syncTemplate(template, ...args) {
-        return [chain(all(args), args => template(...args)), template()]
-    }
-
     render() {
         const page = this.fetchPage()
         const content = chain(page, this.fetchContent.bind(this))
@@ -80,7 +76,7 @@ class AppPage extends LitElement {
         chain(page, this.setMeta.bind(this))
         return html`
             <context-node .data="${page}">
-                ${this.safeUntil(...this.syncTemplate(this.renderPageContent.bind(this), content, imports))}
+                ${this.safeUntil(...syncTemplate(this.renderPageContent.bind(this), content, imports))}
             </context-node>`
     }
 

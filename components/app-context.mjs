@@ -5,7 +5,6 @@ import {all, chain} from "svalit/utils.mjs";
 import {db} from "#db";
 import './app-iterator.mjs'
 import './app-link.mjs'
-import {fetchTemplate} from "#lib/template.mjs";
 
 class AppContext extends LitElement {
     context = new ContextController(this)
@@ -53,13 +52,8 @@ class AppContext extends LitElement {
     }
 
     render() {
-        const templateLoader = chain(fetchTemplate('../includes/link.html', 'link', import.meta.url), template => this.template = template)
-        const linksLoader = chain(this.fetchLinks(), links => this.links = links)
-        return this.safeUntil(chain(all([templateLoader, linksLoader]), () => html`
-            <slot></slot><h2>Pages</h2>
-            <nav>
-                <app-iterator key="links"></app-iterator>
-            </nav>`))
+        return html`
+            <slot></slot>`
     }
 }
 

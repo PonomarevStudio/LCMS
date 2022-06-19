@@ -1,4 +1,4 @@
-import RenderThread from "svalit"
+import RenderThread from "svalit/render.mjs"
 import RenderPage from "./index.mjs"
 import render from "svalit/prerender.mjs"
 import {mkdirSync, writeFileSync} from "fs"

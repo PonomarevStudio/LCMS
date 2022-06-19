@@ -44,29 +44,48 @@ class AppPage extends LitElement {
         return {}
     }
 
-    firstUpdated() {
-        attachStateProxy()
+    fetchPage() {
+        return this.fetchRouteData().status === 404 ? page404 :
+            catcher(chain(this.fetchPageData(), data => data || page404), page404)
+    }
+
+    fetchContent({content}) {
+        return content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url)
+    }
+
+    handleImports({imports}) {
+        const importList = ['./import-test.mjs']
+        if (imports) new Set(Object.values(imports)).forEach(url => importList.push(url))
+        return all(importList.map(url => syncImport(url, import.meta.url)))
+    }
+
+    renderPageContent(content) {
+        const importTest = syncImport('./import-test.mjs', import.meta.url).text
+        return html`
+            <main>
+                ${content ? unsafeHTML(`<app-context>${content}</app-context>`) :
+                        html`<p>Loading page <span>${this.url}</span> ...</p>`}
+            </main>
+            <import-test .text="${importTest}"></import-test>`
+    }
+
+    syncTemplate(template, ...args) {
+        return [chain(all(args), args => template(...args)), template()]
     }
 
     render() {
-        const page = this.fetchRouteData().status === 404 ? page404 : catcher(chain(this.fetchPageData(), data => data || page404), () => page404)
-        const content = chain(page, ({content}) => content || fetchTemplate('../includes/templates/base.html', 'base', import.meta.url))
-        const imports = chain(page, ({imports}) => {
-            const importList = ['./import-test.mjs']
-            if (imports) new Set(Object.values(imports)).forEach(url => importList.push(url))
-            return all(importList.map(url => syncImport(url, import.meta.url)))
-        })
-        chain(page, data => this.setMeta(data || {}))
+        const page = this.fetchPage()
+        const content = chain(page, this.fetchContent.bind(this))
+        const imports = chain(page, this.handleImports.bind(this))
+        chain(page, this.setMeta.bind(this))
         return html`
             <context-node .data="${page}">
-                ${this.safeUntil(chain(all([page, content, imports]), ([, content]) =>
-                        html`
-                            <main>${unsafeHTML(`<app-context>${content}</app-context>`)}</main>
-                            <import-test
-                                    .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`), html`
-                    <p>Loading page <span>${this.url}</span> ...</p>
-                    <import-test .text="${syncImport('./import-test.mjs', import.meta.url).text}"></import-test>`)}
+                ${this.safeUntil(...this.syncTemplate(this.renderPageContent.bind(this), content, imports))}
             </context-node>`
+    }
+
+    firstUpdated() {
+        attachStateProxy()
     }
 
     navigate(url, skipHistory) {

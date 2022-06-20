@@ -3,6 +3,7 @@ import {readFileSync} from "fs";
 import {dumpTemplates} from "#lib/template.mjs";
 
 const clientLoader = readFileSync(new URL('client.mjs', import.meta.url))
+const esmsUrl = `https://ga.jspm.io/npm:es-module-shims@1.5.5/dist/es-module-shims.js`
 
 export const RenderPage = renderClass => class extends renderClass {
     constructor({imports, ...options} = {}) {
@@ -20,6 +21,11 @@ export const RenderPage = renderClass => class extends renderClass {
             this.importsTemplate(this.imports),
             footer
         ].join('\n')
+    }
+
+    shimScripts(source) {
+        return this.scriptTemplate(undefined, {src: esmsUrl, async: null, noshim: null}) +
+            source.replaceAll('type="importmap"', 'type="importmap-shim"').replaceAll('type="module"', 'type="module-shim"')
     }
 }
 

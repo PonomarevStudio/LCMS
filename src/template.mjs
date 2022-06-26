@@ -2,7 +2,7 @@ import {html} from "lit"
 import {readFileSync} from "fs"
 import '../components/lit-router.mjs'
 
-const dev = process.env.VERCEL_ENV === 'development'
+const dev = true // process.env.VERCEL_ENV === 'development'
 
 export const options = {
     dev,

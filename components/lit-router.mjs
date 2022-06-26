@@ -22,17 +22,17 @@ class LitRouter extends LitElement {
     router = new Router(this, [
         {
             path: '*',
-            render: () => html`
-                <context-node .data="${this.page}">
-                    ${this.safeUntil(...syncTemplate(this.renderPageContent.bind(this), this.content, this.imports))}
-                </context-node>`,
-            enter: params => {
-                this.page = this.fetchPage(new URL(params['0'], this.url).href)
+            render: params => {
+                this.url = new URL(params['0'], this.url).href
+                this.page = this.fetchPage(this.url)
                 this.content = chain(this.page, this.fetchContent.bind(this))
                 this.imports = chain(this.page, this.handleImports.bind(this))
                 chain(this.page, this.setMeta.bind(this))
                 attachStateProxy()
-                return all([this.page, this.content, this.imports])
+                return html`
+                    <context-node .data="${this.page}">
+                        ${this.safeUntil(...syncTemplate(this.renderPageContent.bind(this), this.content, this.imports))}
+                    </context-node>`
             }
         }
     ], {fallback: {render: () => html`<h1>404</h1>`}})
@@ -67,7 +67,7 @@ class LitRouter extends LitElement {
         return all(importList.map(url => syncImport(url, import.meta.url)))
     }
 
-    renderPageContent(content = this.content) {
+    renderPageContent(content) {
         const importTest = syncImport('./import-test.mjs', import.meta.url).text
         return html`
             <main>

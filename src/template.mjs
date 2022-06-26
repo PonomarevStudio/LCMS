@@ -2,7 +2,7 @@ import {html} from "lit"
 import {readFileSync} from "fs"
 import '../components/lit-router.mjs'
 
-const dev = true // process.env.VERCEL_ENV === 'development'
+const dev = process.env.VERCEL_ENV === 'development'
 
 export const options = {
     dev,
@@ -16,7 +16,8 @@ export const options = {
                 "#utils": "/lib/utils.mjs",
                 "#db": "/lib/db/client.mjs",
             }
-        }
+        },
+        env: ['development', 'browser', 'module']
     },
     shim: {shimMode: true, mapOverrides: true},
     imports: ['/components/lit-router.mjs'],

@@ -16,8 +16,7 @@ export const options = {
                 "#utils": "/lib/utils.mjs",
                 "#db": "/lib/db/client.mjs",
             }
-        },
-        env: ['development', 'browser', 'module']
+        }
     },
     shim: {shimMode: true, mapOverrides: true},
     imports: ['/components/lit-router.mjs'],

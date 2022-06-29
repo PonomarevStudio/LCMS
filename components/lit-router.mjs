@@ -1,6 +1,6 @@
 import {db} from "#db"
 import "urlpattern-polyfill"
-import {html, LitElement} from "lit"
+import {css, html, LitElement} from "lit"
 import {Router} from '@svalit/router'
 import {syncImport} from "svalit/loader.mjs"
 import {SafeUntil} from "svalit/directives.mjs"
@@ -39,6 +39,14 @@ class LitRouter extends LitElement {
 
     static get properties() {
         return {url: {type: String, reflect: true}}
+    }
+
+    static get styles() {
+        return css`
+          a {
+            color: inherit;
+          }
+        `
     }
 
     fetchRouteData(url = this.url) {
@@ -84,7 +92,7 @@ class LitRouter extends LitElement {
             <nav><a href="/">/</a><br><a href="/test">/test</a></nav>`
     }
 
-    setMeta({title = 'LCMS', status = 200} = {}) {
+    setMeta({title = 'LCMS'} = {}) {
         if (typeof process === 'object') return;
         history.replaceState(history.state, title)
         document.title = title

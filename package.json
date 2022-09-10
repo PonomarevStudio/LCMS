@@ -20,7 +20,7 @@
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
     "svalit": "^0.1.0-alpha.15",
-    "urlpattern-polyfill": "^5.0.6"
+    "urlpattern-polyfill": "^5.0.9"
   },
   "devDependencies": {
     "servor": "^4.0.2"

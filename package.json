@@ -14,7 +14,7 @@
     "bson-objectid": "^2.0.3",
     "clean-stack": "^5.0.0",
     "fetched-list": "^0.0.5",
-    "lit": "^2.3.1",
+    "lit": "^2.4.0",
     "lit-element": "npm:@svalit/lit-element@^3.0.0-rc.3",
     "mongodb": "^4.10.0",
     "serialize-error": "^11.0.0",

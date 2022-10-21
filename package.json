@@ -4,8 +4,8 @@
   "type": "module",
   "main": "src/index.mjs",
   "scripts": {
-    "dev": "vc dev --listen 80",
-    "dev-watch": "servor --reload & vc dev --listen 80"
+    "dev": "vc dev",
+    "dev-watch": "servor --reload & vc dev"
   },
   "dependencies": {
     "@svalit/router": "^0.1.0-alpha.4",

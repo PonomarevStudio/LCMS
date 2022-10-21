@@ -1,0 +1,52 @@
+{
+  "schemaVersion": "2.0.0",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "index.mjs",
+      "declarations": [
+        {
+          "kind": "class",
+          "customElement": true,
+          "name": "SimpleCounter",
+          "tagName": "simple-counter",
+          "description": "Demo component",
+          "members": [
+            {
+              "kind": "field",
+              "name": "count"
+            },
+            {
+              "kind": "method",
+              "name": "setCount"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SimpleCounter",
+          "declaration": {
+            "name": "SimpleCounter"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "simple-counter",
+          "declaration": {
+            "name": "SimpleCounter"
+          }
+        }
+      ]
+    }
+  ]
+}

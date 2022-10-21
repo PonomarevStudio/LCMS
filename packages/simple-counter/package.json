@@ -4,6 +4,7 @@
   "type": "module",
   "description": "Demo component",
   "main": "index.mjs",
+  "customElements": "custom-elements.json",
   "author": "PonomareVlad",
   "license": "MIT"
 }

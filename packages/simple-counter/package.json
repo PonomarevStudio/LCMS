@@ -1,10 +1,13 @@
 {
   "name": "@svalit/simple-counter",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "type": "module",
   "description": "Demo component",
   "main": "index.mjs",
   "customElements": "custom-elements.json",
+  "dependencies": {
+    "lit": "^2.4.0"
+  },
   "author": "PonomareVlad",
   "license": "MIT"
 }

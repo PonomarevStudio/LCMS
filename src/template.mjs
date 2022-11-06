@@ -8,7 +8,8 @@ export const options = {
     dev,
     importMapOptions: {
         cache: dev,
-        ignore: ['mongodb'],
+        ignore: ['mongodb', 'fs/promises'],
+        rootUrl: new URL('../', import.meta.url),
         inputMap: {
             imports: {
                 "#root/": "/",

@@ -17,7 +17,7 @@
     "fetched-list": "^0.0.5",
     "lit": "^2.4.0",
     "lit-element": "npm:@svalit/lit-element@^3.0.0-rc.3",
-    "mongodb": "^4.10.0",
+    "mongodb": "^4.11.0",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
     "svalit": "^0.1.0-alpha.15",

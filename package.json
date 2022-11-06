@@ -15,6 +15,7 @@
     "bson-objectid": "^2.0.3",
     "clean-stack": "^5.0.1",
     "fetched-list": "^0.0.5",
+    "@lit-async/ssr-client": "^1.0.3",
     "lit": "npm:@lit-async/lit@^2.4.3",
     "lit-element": "npm:@lit-async/lit-element@^3.2.4",
     "mongodb": "^4.11.0",

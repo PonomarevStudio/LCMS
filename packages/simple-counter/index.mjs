@@ -13,19 +13,30 @@ export class SimpleCounter extends LitElement {
           }`
     }
 
+    constructor() {
+        super();
+        this.updateCount();
+    }
+
     setCount(value) {
         this.count = value
         if (window.state) window.state.count = this.count
     }
 
+    updateCount() {
+        if (!window.state) return;
+        this.count = parseInt(window?.state?.count) || 0;
+        this.state = true;
+    }
+
     firstUpdated() {
-        this.count = (window.state ? parseInt(state.count) : 0) || 0
+        if (!this.state) setTimeout(() => requestAnimationFrame(() => this.updateCount()), 0)
     }
 
     render() {
         return html`
             <button @click="${() => this.setCount(--this.count)}">-</button>
-            <output>${this.count || 0}</output>
+            <output>${this.count}</output>
             <button @click="${() => this.setCount(++this.count)}">+</button>`
     }
 }

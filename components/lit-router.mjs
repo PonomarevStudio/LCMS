@@ -3,11 +3,11 @@ import "urlpattern-polyfill"
 import {css, html, LitElement} from "lit"
 import {Router} from '@svalit/router'
 import {syncImport} from "svalit/loader.mjs"
-import {SafeUntil} from "svalit/directives.mjs"
 import {fetchTemplate} from "#lib/template.mjs"
 import {attachStateProxy} from "#lib/router.mjs"
 import {unsafeHTML} from "lit/directives/unsafe-html.js"
 import {all, catcher, chain, syncTemplate} from "svalit/utils.mjs"
+import {serverUntil} from '@lit-labs/ssr-client/directives/server-until.js';
 import './context-node.js'
 import './app-context.mjs'
 
@@ -18,7 +18,7 @@ const page404 = {
 }
 
 class LitRouter extends LitElement {
-    safeUntil = new SafeUntil(this)
+    // safeUntil = new SafeUntil(this)
     router = new Router(this, [
         {
             path: '*',
@@ -31,7 +31,7 @@ class LitRouter extends LitElement {
                 attachStateProxy()
                 return html`
                     <context-node .data="${this.page}">
-                        ${this.safeUntil(...syncTemplate(this.renderPageContent.bind(this), this.content, this.imports))}
+                        ${serverUntil(...syncTemplate(this.renderPageContent.bind(this), this.content, this.imports))}
                     </context-node>`
             }
         }
@@ -88,7 +88,7 @@ class LitRouter extends LitElement {
     render() {
         if (typeof process === 'object') this.router.serverPath = new URL(this.url).pathname
         return html`
-            <main>${this.safeUntil(this.router.outlet())}</main>
+            <main>${serverUntil(this.router.outlet())}</main>
             <nav><a href="/">/</a><br><a href="/test">/test</a></nav>`
     }
 

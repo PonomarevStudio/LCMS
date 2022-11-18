@@ -18,6 +18,10 @@ export const options = {
                 "#lib/": "/lib/",
                 "#utils": "/lib/utils.mjs",
                 "#db": "/lib/db/client.mjs",
+                "svalit/": "/packages/svalit/",
+                "@svalit/router": "/packages/router/index.mjs",
+                "@svalit/components/": "/packages/components/",
+                "@svalit/simple-counter": "/packages/simple-counter/index.mjs"
             }
         }
     },

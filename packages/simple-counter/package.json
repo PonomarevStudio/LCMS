@@ -9,5 +9,13 @@
     "lit": "^2.4.0"
   },
   "author": "PonomareVlad",
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PonomareVlad/LCMS.git"
+  },
+  "bugs": {
+    "url": "https://github.com/PonomareVlad/LCMS/issues"
+  },
+  "homepage": "https://github.com/PonomareVlad/LCMS#readme"
 }

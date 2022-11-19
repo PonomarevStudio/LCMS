@@ -21,7 +21,7 @@
     "mongodb": "^4.11.0",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
-    "svalit": "latest",
+    "@svalit/core": "latest",
     "urlpattern-polyfill": "^6.0.1"
   },
   "devDependencies": {

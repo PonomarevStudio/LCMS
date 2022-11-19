@@ -1,7 +1,7 @@
-import {chain} from "svalit/utils.mjs";
+import {chain} from "@svalit/core/utils.mjs";
 import {html, LitElement} from "lit"
-import {SafeUntil} from "svalit/directives.mjs";
-import {ContextController} from "svalit/controllers.mjs";
+import {SafeUntil} from "@svalit/core/directives.mjs";
+import {ContextController} from "@svalit/core/controllers.mjs";
 import {unsafeHTML} from 'lit/directives/unsafe-html.js';
 
 class ContextNode extends LitElement {

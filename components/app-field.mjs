@@ -1,5 +1,5 @@
 import {LitElement} from "lit"
-import {ContextController} from "svalit/controllers.mjs";
+import {ContextController} from "@svalit/core/controllers.mjs";
 
 export class AppField extends LitElement {
     context = new ContextController(this);

@@ -2,11 +2,11 @@ import {db} from "#db"
 import "urlpattern-polyfill"
 import {css, html, LitElement} from "lit"
 import {Router} from '@svalit/router'
-import {syncImport} from "svalit/loader.mjs"
+import {syncImport} from "@svalit/core/loader.mjs"
 import {fetchTemplate} from "#lib/template.mjs"
 import {attachStateProxy} from "#lib/router.mjs"
 import {unsafeHTML} from "lit/directives/unsafe-html.js"
-import {all, catcher, chain, syncTemplate} from "svalit/utils.mjs"
+import {all, catcher, chain, syncTemplate} from "@svalit/core/utils.mjs"
 import {serverUntil} from '@lit-labs/ssr-client/directives/server-until.js';
 import './context-node.js'
 import './app-context.mjs'

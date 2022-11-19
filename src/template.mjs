@@ -5,7 +5,7 @@ import '../components/lit-router.mjs'
 const dev = process.env.VERCEL_ENV === 'development',
     packageData = JSON.parse(readFileSync(new URL('../package.json', import.meta.url)).toString()),
     devImports = {
-        "svalit/": "/packages/svalit/",
+        "@svalit/core/": "/packages/svalit/",
         "@svalit/router": "/packages/router/index.mjs",
         "@svalit/components/": "/packages/components/",
         "@svalit/simple-counter": "/packages/simple-counter/index.mjs"

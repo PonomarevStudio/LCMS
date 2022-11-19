@@ -1,6 +1,6 @@
-import RenderThread from "svalit/render.mjs"
+import RenderThread from "@svalit/core/render.mjs"
 import RenderPage from "./index.mjs"
-import render from "svalit/prerender.mjs"
+import render from "@svalit/core/prerender.mjs"
 import {mkdirSync, writeFileSync} from "fs"
 import {template, options} from "./template.mjs"
 import {siteMap} from "#lib/router.mjs"

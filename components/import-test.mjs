@@ -1,7 +1,7 @@
 import {html, LitElement} from "lit"
-import {chain} from "svalit/utils.mjs";
-import {syncImport} from "svalit/loader.mjs";
-import {SafeUntil} from "svalit/directives.mjs";
+import {chain} from "@svalit/core/utils.mjs";
+import {syncImport} from "@svalit/core/loader.mjs";
+import {SafeUntil} from "@svalit/core/directives.mjs";
 
 const FetchedList = await import("fetched-list")
 

@@ -1,7 +1,7 @@
 import {css, html, LitElement} from "lit"
-import {SafeUntil} from "svalit/directives.mjs";
-import {ContextController} from "svalit/controllers.mjs";
-import {all, chain} from "svalit/utils.mjs";
+import {SafeUntil} from "@svalit/core/directives.mjs";
+import {ContextController} from "@svalit/core/controllers.mjs";
+import {all, chain} from "@svalit/core/utils.mjs";
 import {db} from "#db";
 import './app-iterator.mjs'
 import './app-link.mjs'

@@ -1,7 +1,7 @@
 import {html, LitElement} from "lit"
 import {repeat} from 'lit/directives/repeat.js';
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
-import {ContextController} from "svalit/controllers.mjs";
+import {ContextController} from "@svalit/core/controllers.mjs";
 
 class AppIterator extends LitElement {
     context = new ContextController(this);

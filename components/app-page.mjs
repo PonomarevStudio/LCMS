@@ -1,10 +1,10 @@
 import {html, LitElement} from "lit"
-import {syncImport} from 'svalit/loader.mjs'
-import {SafeUntil} from "svalit/directives.mjs"
+import {syncImport} from '@svalit/core/loader.mjs'
+import {SafeUntil} from "@svalit/core/directives.mjs"
 import {fetchTemplate} from "#lib/template.mjs"
 import {attachStateProxy} from "#lib/router.mjs"
 import {unsafeHTML} from 'lit/directives/unsafe-html.js'
-import {all, chain, catcher, syncTemplate} from "svalit/utils.mjs"
+import {all, chain, catcher, syncTemplate} from "@svalit/core/utils.mjs"
 import './context-node.js'
 import './app-context.mjs'
 import './app-field.mjs'

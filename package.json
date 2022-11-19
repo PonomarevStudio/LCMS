@@ -9,9 +9,9 @@
     "dev-watch": "servor --reload & vc dev"
   },
   "dependencies": {
-    "@svalit/router": "^0.1.4",
+    "@svalit/router": "^0.1.5",
     "@svalit/simple-counter": "^0.0.4",
-    "@svalit/vercel": "^0.1.4",
+    "@svalit/vercel": "^0.1.5",
     "bson-objectid": "^2.0.3",
     "clean-stack": "^5.0.1",
     "fetched-list": "^0.0.5",
@@ -21,7 +21,7 @@
     "mongodb": "^4.11.0",
     "serialize-error": "^11.0.0",
     "string.prototype.replaceall": "^1.0.6",
-    "@svalit/core": "^0.1.4",
+    "@svalit/core": "^0.1.5",
     "urlpattern-polyfill": "^6.0.1"
   },
   "devDependencies": {

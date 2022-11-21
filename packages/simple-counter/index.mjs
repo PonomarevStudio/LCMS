@@ -18,6 +18,10 @@ export class SimpleCounter extends LitElement {
         this.updateCount();
     }
 
+    getCount() {
+        return parseInt(this.count) || 0
+    }
+
     setCount(value) {
         this.count = value
         if (window.state) window.state.count = this.count
@@ -36,9 +40,9 @@ export class SimpleCounter extends LitElement {
 
     render() {
         return html`
-            <button @click="${() => this.setCount(--this.count)}">-</button>
+            <button @click="${() => this.setCount(this.getCount() - 1)}">-</button>
             <output>${this.count || 0}</output>
-            <button @click="${() => this.setCount(++this.count)}">+</button>`
+            <button @click="${() => this.setCount(this.getCount() + 1)}">+</button>`
     }
 }
 
